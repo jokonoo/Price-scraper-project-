@@ -1,0 +1,4 @@
+*.sqlite3
+*.pyc
+0*.py
+test.py

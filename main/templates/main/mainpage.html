@@ -1,0 +1,37 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Price scraper</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+  <div class="container">
+  <div class="container-nav">
+    <a href="{% url 'mainpage' %}" class="logo">Price scraper</a>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href= "{% url 'articles_list' %}" >Free games articles</a></li>
+        <li><a href= "{% url 'formview' %}" >Add new product</a></li>
+        <li><a href= "{% url 'user_products' %}" >Your products</a></li>
+      </ul>
+      {% block nav %}
+      <ul class="nav-login">
+      {% if user.is_authenticated %}
+        <li><a href= "{% url 'logout' %}" >Log out</a></li>  
+      {% else %}
+        <li><a href= "{% url 'register' %}" >Create new profile</a></li>
+        <li><a href= "{% url 'login' %}" >Log in</a></li>
+      {% endif %}
+      </ul>
+      {% endblock nav %}
+    </nav>
+  </div>
+  </div>
+  {% block content %}
+  {% endblock content %}
+</body>
+</html>

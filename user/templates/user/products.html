@@ -1,0 +1,12 @@
+<h2> Tracked products: </h2>
+{% for product in p_not_ended %}
+<h3><a href = "{% url 'detailed_product' product.slug %}"> Name: {{product.name}} </a></h3>
+<p>Wanted price: {{product.wanted_price}} zł </p>
+<p>Current price: {{product.current_price}} zł </p>
+{% endfor %}
+<h2> Ended tracking: </h2>
+{% for product in p_ended %}
+<h3><a href = "{% url 'detailed_product' product.slug %}"> Name: {{product.name}} </a></h3>
+<p>Wanted price: {{product.wanted_price}} zł </p>
+<p>Current price: {{product.current_price}} zł </p>
+{% endfor %}

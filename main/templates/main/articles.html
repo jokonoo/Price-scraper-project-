@@ -1,0 +1,9 @@
+{% extends 'main/mainpage.html' %}
+{% block content %}
+  {% for article in articles %}
+  <h2> {{article.title}} </h2>
+  <p> {{article.url}} </p>
+  <p> {{article.date}} </p>
+  <p> Category :{{article.category}} </p>
+  {% endfor %}
+{% endblock content %}
