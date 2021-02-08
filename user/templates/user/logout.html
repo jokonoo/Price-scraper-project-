@@ -1,10 +1,10 @@
 {% extends 'main/mainpage.html' %}
 {% block content %}
-<body>
-	<form method = 'POST'>
-	{% csrf_token %}
-	{{form.as_p}}
-	<button type = 'submit'> Logout </button>
-	</form>
-</body>
+	<body>
+		<form method = 'POST'>
+			{% csrf_token %}
+			{{form.as_p}}
+			<button type = 'submit'> Logout </button>
+		</form>
+	</body>
 {% endblock content %}

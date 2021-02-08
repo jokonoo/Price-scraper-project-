@@ -1,5 +1,4 @@
 from django.db import models
-from PIL import Image
 from django.contrib.auth.models import User
 
 class Article(models.Model):
@@ -13,7 +12,6 @@ class Article(models.Model):
 
 	def __str__(self):
 		return self.title
-
 
 	class Meta:
 		ordering = ['-date']
