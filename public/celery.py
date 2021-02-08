@@ -10,7 +10,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
 	'automated_scraping' : {
 		'task' : 'main.tasks.init_scraping',
-		'schedule' : crontab(minute='*/15')
+		'schedule' : crontab(minute='*/1')
 	},
 	'articles_scraping' : {
 		'task' : 'main.tasks.article_scrape',

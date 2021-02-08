@@ -1,19 +1,26 @@
 #django imports
-from django.urls import reverse
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
 from django.views.generic import ListView, FormView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
 from .models import Article, Product
 from .forms import UrlForm
+from .scrapers import first_scrape
 
 # requests/bs4 imports
 import requests
 from bs4 import BeautifulSoup as bs
 
-class Mainpage(TemplateView):
+class Mainpage(ListView):
+	model = Article
 	template_name = 'main/mainpage.html'
+
+	def get_context_data(self):
+		context = super().get_context_data()
+		context['articles'] = Article.objects.all()[0:3]
+		context['products'] = Product.objects.all()[0:3]
+		return context
 
 class ArticlesList(ListView):
 	model = Article
@@ -33,31 +40,7 @@ class UrlAndPriceForm(LoginRequiredMixin, FormView):
 		 	user = self.request.user,
 		 	ended = False,
 		 	defaults = {'wanted_price' : price})
-		 first_scrape(object.slug)
-		 #return HttpResponseRedirect(reverse(first_scrape, kwargs = {'slug' : object.slug}))
-		 return HttpResponseRedirect(reverse('mainpage'))
-
-def first_scrape(slug):
-
-	object = Product.objects.get(slug = slug)
-	if 'www.morele.net' in object.url:
-		response = requests.get(object.url).text
-		source = bs(response, 'lxml')
-		name = source.select('h1.prod-name')[0].string
-		price = source.select('div.product-price')[0].text
-		if ',' in price:
-			price = ''.join(price.strip().split())
-			price = int(''.join(price.split(','))[0:-4]) 
-		else:
-			price = int(''.join(price.strip().split())[0:-2])
-		
-		object, created = Product.objects.get_or_create(
-			url = object.url,
-			wanted_price = object.wanted_price,
-			defaults = {'name' : name, 'first_price' : price, 'current_price' : price}
-			)
-		if object:
-			object.name = name
-			object.first_price = price
-			object.current_price = price
-			object.save()
+		 msg = first_scrape(object.slug)
+		 if msg == "error":
+		 	messages.error(self.request, 'Item is not available')
+		 return redirect('mainpage')

@@ -19,7 +19,7 @@ class UserProducts(ListView):
 	
 	model = Product
 	template_name = 'user/products.html'
-	paginate_by = 20
+	paginate_by = 10
 
 	def get_context_data(self):
 		context = super().get_context_data()

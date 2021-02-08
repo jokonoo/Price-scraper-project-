@@ -3,35 +3,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Price scraper</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Price scraper</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-  <div class="container">
-  <div class="container-nav">
-    <a href="{% url 'mainpage' %}" class="logo">Price scraper</a>
-    <nav>
-      <ul class="nav-menu">
-        <li><a href= "{% url 'articles_list' %}" >Free games articles</a></li>
-        <li><a href= "{% url 'formview' %}" >Add new product</a></li>
-        <li><a href= "{% url 'user_products' %}" >Your products</a></li>
-      </ul>
-      {% block nav %}
-      <ul class="nav-login">
-      {% if user.is_authenticated %}
-        <li><a href= "{% url 'logout' %}" >Log out</a></li>  
-      {% else %}
-        <li><a href= "{% url 'register' %}" >Create new profile</a></li>
-        <li><a href= "{% url 'login' %}" >Log in</a></li>
-      {% endif %}
-      </ul>
-      {% endblock nav %}
-    </nav>
-  </div>
-  </div>
-  {% block content %}
-  {% endblock content %}
+    <div class="container">
+    <div class="container-nav">
+        <a href="{% url 'mainpage' %}" class="logo">Price scraper</a>
+        <nav>
+            <ul class="nav-menu">
+                <li><a href= "{% url 'articles_list' %}" >Free games articles</a></li>
+                <li><a href= "{% url 'formview' %}" >Add new product</a></li>
+                <li><a href= "{% url 'user_products' %}" >Your products</a></li>
+            </ul>
+            {% block nav %}
+                <ul class="nav-login">
+                    {% if user.is_authenticated %}
+                        <li><a href= "{% url 'logout' %}" >Log out</a></li>  
+                    {% else %}
+                        <li><a href= "{% url 'register' %}" >Create new profile</a></li>
+                        <li><a href= "{% url 'login' %}" >Log in</a></li>
+                    {% endif %}
+                </ul>
+            {% endblock nav %}
+        </nav>
+    </div>
+    </div>
+{% block content %}
+    {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+        <h1> Newest articles: </h2>
+            {% for article in articles %}
+            <h3><a href = "{{article.url}}"> {{article.title}} </a></h3>
+            {% endfor %}        
+        {% if user.is_authenticated %}
+            <h1> Your newest products: </h2>
+            {% for product in products %}
+                <h3><a href = "{% url 'detailed_product' product.slug %}"> {{product.name}} </a></h3>
+                <p>Current price: {{product.current_price}}</p>
+                <p>Wanted price: {{product.wanted_price}}</p>
+            {% endfor %}        
+        {% endif %}
+{% endblock content %}
 </body>
 </html>

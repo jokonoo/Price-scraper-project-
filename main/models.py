@@ -11,6 +11,10 @@ class Article(models.Model):
 	category = models.CharField(max_length = 50, null = True, blank = True)
 	mainpage_url = models.URLField(null = True, blank = True)
 
+	def __str__(self):
+		return self.title
+
+
 	class Meta:
 		ordering = ['-date']
 
@@ -24,11 +28,15 @@ class Product(models.Model):
 	date = models.DateTimeField(auto_now_add = True)
 	image_url = models.URLField(null = True, blank = True)
 	ended = models.BooleanField(default = False)
-	user = models.ForeignKey(User, on_delete = models.CASCADE, blank=True, null=True)
+	user = models.ForeignKey(User, on_delete = models.CASCADE)
+	worked = models.BooleanField(default = False)
 
 	#def save(self, *args, **kwargs):
 	#	self.slug = f'{self.pk}_{self.wanted_price}'
 	#	super().save()
+
+	def __str__(self):
+		return f'{self.user}-{self.name}'
 	
 	class Meta:
 		ordering = ['ended', '-date']

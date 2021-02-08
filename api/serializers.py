@@ -15,17 +15,30 @@ class ProductSerializer(serializers.ModelSerializer):
 		'hyperlink',
 		'name',
 		'url',
-		'slug',
 		'first_price',
 		'current_price',
 		'wanted_price',
 		'date',
 		'image_url',
 		'ended',
-		'user']
+		'user',
+		]
 
 class ArticleSerializer(serializers.HyperlinkedModelSerializer):
+
+	hyperlink = serializers.HyperlinkedIdentityField(
+		view_name='article_detail',
+		lookup_field = 'pk'
+		)
 		
 	class Meta:
 		model = Article
-		exclude = ['image']
+		fields = [
+		'hyperlink',
+		'title',
+		'url',
+		'date',
+		'image_url',
+		'category',
+		'mainpage_url',
+		]

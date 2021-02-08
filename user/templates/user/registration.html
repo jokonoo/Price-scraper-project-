@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'main/mainpage.html' %}
+{% block content %}
 <body>
 	<form method = 'POST'>
 	{% csrf_token %}
@@ -7,4 +7,4 @@
 	<button type = 'submit'> Register </button>
 	</form>
 </body>
-</html>
+{% endblock content %}
