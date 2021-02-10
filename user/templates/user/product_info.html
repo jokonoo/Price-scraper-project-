@@ -8,4 +8,5 @@
 	<p>Current price: {{product.current_price}} zł</p>
 	<p>Ended tracking: {{product.ended}} </p>
 	<p>DateTime added: {{product.date}} </p>
+	<p><a href = "{% url 'product_remove' product.slug %}"> Click here to remove product</a></p> 
 {% endblock content %}

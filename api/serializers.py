@@ -19,7 +19,6 @@ class ProductSerializer(serializers.ModelSerializer):
 		'current_price',
 		'wanted_price',
 		'date',
-		'image_url',
 		'ended',
 		'user',
 		]
@@ -38,7 +37,6 @@ class ArticleSerializer(serializers.HyperlinkedModelSerializer):
 		'title',
 		'url',
 		'date',
-		'image_url',
 		'category',
 		'mainpage_url',
 		]

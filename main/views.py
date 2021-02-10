@@ -7,6 +7,7 @@ from django.contrib import messages
 from .models import Article, Product
 from .forms import UrlForm
 from .scrapers import first_scrape
+from django.contrib import messages
 
 # requests/bs4 imports
 import requests
@@ -44,3 +45,9 @@ class UrlAndPriceForm(LoginRequiredMixin, FormView):
 		 if msg == "error":
 		 	messages.error(self.request, 'Item is not available')
 		 return redirect('mainpage')
+
+def product_remove(request, product):
+	instance = Product.objects.get(slug = product)
+	instance.delete()
+	messages.info(request, 'Product removed successfully')
+	return redirect('user_products')

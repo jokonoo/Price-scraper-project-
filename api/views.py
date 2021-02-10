@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from main.models import Product, Article
 from .serializers import ProductSerializer, ArticleSerializer
 from rest_framework import generics, filters
