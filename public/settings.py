@@ -14,8 +14,9 @@ from pathlib import Path
 import os
 import json
 
-with open('/kubaw/Desktop/public/config.json') as config_file:
+with open('C:/Users/kubaw/Desktop/public/config.json') as config_file:
     config = json.load(config_file)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -127,6 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 #STATIC/MEDIA
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/staticfiles')
 
 STATIC_URL = '/static/'
 
