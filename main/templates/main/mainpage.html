@@ -1,5 +1,5 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'staticfiles/css/style.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,8 +15,10 @@
         <nav>
             <ul class="nav-menu">
                 <li><a href= "{% url 'articles_list' %}" >Free games articles</a></li>
-                <li><a href= "{% url 'formview' %}" >Add new product</a></li>
-                <li><a href= "{% url 'user_products' %}" >Your products</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href= "{% url 'formview' %}" >Add new product</a></li>
+                    <li><a href= "{% url 'user_products' %}" >Your products</a></li>
+                {% endif %}
             </ul>
             {% block nav %}
                 <ul class="nav-login">

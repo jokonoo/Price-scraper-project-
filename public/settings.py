@@ -14,8 +14,12 @@ from pathlib import Path
 import os
 import json
 
-with open('C:/Users/kubaw/Desktop/public/config.json') as config_file:
-    config = json.load(config_file)
+try:
+    with open('C:/Users/kubaw/Desktop/public/config.json') as config_file:
+        config = json.load(config_file)
+except:
+    with open('/var/www/html/public/config.json') as config_file:
+        config = json.load(config_file)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -127,16 +131,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-#STATIC/MEDIA
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 
 MEDIA_URL = '/images/'
+
 
 #LOGIN/LOGOFF
 
@@ -145,6 +149,7 @@ LOGIN_REDIRECT_URL = 'mainpage'
 LOGIN_URL = 'login'
 
 LOGOUT_REDIRECT_URL = 'mainpage'
+
 
 #EMAIL
 
@@ -158,6 +163,7 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = config.get('EMAIL_USER')
 EMAIL_HOST_PASSWORD = config.get('EMAIL_PASS')
+
 
 #REST
 
