@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  server: &server
+    build:
+      context: .
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CELERY_BROKER=amqp://guest:guest@broker:5672//
+    volumes:
+      - .:/var/www/html/public
+    ports:
+      - 80:80
+    command:
+      ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+    depends_on:
+      - broker
+  
+  broker:
+    container_name : broker
+    image: rabbitmq:latest
+    hostname: broker
+    ports:
+      - 5672:5672
+    environment:   
+    - RABBITMQ_DEFAULT_USER=guest
+    - RABBITMQ_DEFAULT_PASS=guest
+
+  worker:
+    <<: *server
+    command: celery -A public worker -l INFO
+    ports: []
+    depends_on:
+      - broker
+    environment:
+      - CELERY_BROKER=amqp://guest:guest@broker:5672//
+
+  beat:
+    build:
+      context: .
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CELERY_BROKER=amqp://guest:guest@broker:5672//
+    volumes:
+      - .:/var/www/html/public
+    command:
+      celery -A public beat -l INFO
+    depends_on:
+      - broker
+      - worker
+
+
+
+

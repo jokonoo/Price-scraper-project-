@@ -180,4 +180,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
+#CELERY
+
+CELERY_BROKER_URL = os.environ['CELERY_BROKER']
+
 
